@@ -1,0 +1,63 @@
+[app]
+# 事务 batch 数
+insert-batch-size = 100
+# 是否开启更新元数据 meta-schema 库表慢日志，单位毫秒
+slowlog-threshold = 300
+# pprof 端口
+pprof-port = ":9696"
+# 统计信息收集超时时间，单位：秒
+analyze-timeout = 5
+# 数据库表并发收集
+table-threads = 8
+# 统计信息 Dump 目录 -> 全局
+stats-outdir = "/Users/marvin/gostore/tistat/cmd/test"
+# 统计信息 Dump 目录数据保留时间 -> 全局
+stats-gc-days = 7
+# 采样率，Only DB version > v5.3 版本适用 -> 全局
+# 0 < small-table-samplerate <= 1000000
+# 1000000 < medium-table-samplerate <= 10000000
+# big-table-samplerate > 1000000
+small-table-samplerate = "1.0"
+medium-table-samplerate = "1.0"
+big-table-samplerate = "1.0"
+# 定时任务
+# 秒 分 时 日 月 周 (0 to 6 are Sunday to Saturday)
+# 0 0 1 * * * 每天凌晨 01:00:00 执行
+crontab = "0 0 1 * * *"
+
+[tidb]
+# 目标端连接串
+# 查杀 analyze timeout 数据库连接，需要直连 tidb-server
+username = "root"
+password = ""
+host = "10.2.103.30"
+port = 4000
+status-port = 10080
+# mysql 链接参数
+# tidb_build_stats_concurrency 会话变量设置
+connect-params = "charset=utf8mb4&multiStatements=true&parseTime=True&loc=Local&tidb_build_stats_concurrency=4&tidb_distsql_scan_concurrency=15&tidb_index_serial_scan_concurrency=15"
+# 目标端元数据库
+# CREATE DATABASE IF NOT EXIST db_meta
+meta-schema = "tistat"
+
+[alert]
+# smtp 服务器配置
+smtp-host = "smtp.163.com"
+smtp-port =  25
+# 告警信息发送邮箱以及授权客户端密码
+send-email = "a17665315080@163.com"
+send-email-auth-pwd = "WWQQFPJUBBSEMIZI"
+# 告警信息接收邮箱
+receive-emails = ["wentao.jin@pingcap.com"]
+
+[log]
+# 日志 level
+log-level = "info"
+# 日志文件路径
+log-file = "./tistat.log"
+# 每个日志文件保存的最大尺寸 单位：M
+max-size = 128
+# 文件最多保存多少天
+max-days = 7
+# 日志文件最多保存多少个备份
+max-backups = 30
